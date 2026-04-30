@@ -951,12 +951,14 @@ def main():
             accuracy = 1
 
         elif args.platform_target == "trn3":
-            model, tokenizer, generation_config = prepare_inference(
-                qwen.NeuronQwen3MoeForCausalLM, args
-            )
-
+            # Compile baseline first; both prepare_inference calls write to
+            # /tmp/nxd_model/, so the second compile is what find_hlos() reads.
             base_model, _, base_generation_config = prepare_inference(
                 baseline_qwen.NeuronQwen3MoeForCausalLM, args
+            )
+
+            model, tokenizer, generation_config = prepare_inference(
+                qwen.NeuronQwen3MoeForCausalLM, args
             )
 
             accuracy = run_accuracy_check(
@@ -1055,12 +1057,14 @@ def main():
         print(f"\nTotal Score: {total_score}\n")
 
     elif args.mode == "evaluate_all" and args.platform_target == "trn3":
-        model, tokenizer, generation_config = prepare_inference(
-            qwen.NeuronQwen3MoeForCausalLM, args
-        )
-
+        # Compile baseline first; both prepare_inference calls write to
+        # /tmp/nxd_model/, so the second compile is what find_hlos() reads.
         base_model, _, base_generation_config = prepare_inference(
             baseline_qwen.NeuronQwen3MoeForCausalLM, args
+        )
+
+        model, tokenizer, generation_config = prepare_inference(
+            qwen.NeuronQwen3MoeForCausalLM, args
         )
 
         prompts = parse_prompts("prompts.txt")
