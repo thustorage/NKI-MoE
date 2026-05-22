@@ -10,6 +10,8 @@ For more details about the competition, please refer to the [competition reposit
 
 The MLSys 2026 competition track presented a unique challenge: optimizing MoE model inference on specialized AI hardware using low-level programming interfaces. Specifically, teams were tasked with implementing the Qwen3-30B-A3B model targeting a single AWS Trainium2/3 chip.
 
+A technical report for this work is included in the repository as [Report.pdf](Report.pdf).
+
 ## Repository Structure
 
 ### Optimized Kernels
