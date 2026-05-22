@@ -12,7 +12,7 @@ The MLSys 2026 competition track presented a unique challenge: optimizing MoE mo
 
 ## Repository Structure
 
-### Optimized MoE Kernels
+### Optimized Kernels
 `kernels/`
 
 This directory contains the optimized inference path used by our submission. The main files are:
@@ -26,6 +26,7 @@ This directory contains the optimized inference path used by our submission. The
 - `moe/rmsnorm_tkg.py`: The token-generation RMSNorm implementation used by the fused MoE path.
 - `moe/router_topk.py`: The router Top-K decode helper implementation. It handles router weight layout conversion, SBUF-friendly loading, and the slim decode-time top-k routing path that selects which experts each token should visit.
 - `utils/`: Shared kernel support code such as allocators, tensor views, assertions, tiling helpers, and logging.
+- `attention/`: A fused token-generation attention block with qkvo projections and norms. Compared with the baseline attention implementation provided for the competition, it delivers about 1.3x speedup. However, although it is mathematically correct, its different accumulation order prevents it from meeting the competition's bit-wise identical requirement, so it was not used in the final submission.
 
 ### AI-assistting System
 `night-optimizer/`
